@@ -18,10 +18,33 @@ int main() {
     std::vector<double> data_mag;
     //calculate the magnitude
     data_mag = mag(data);
-    // print the data
-    print_data(data,100);
-    // print the magniture
-    print_mag(data_mag);
+
+    while (true){
+        std::cout<<"Please specify the function you want to run, choose among \"print_data\",\"print_mag\", and \"quit\"."<<std::endl;
+        std::string command;
+        std::cin >> command;
+        if (command == "print_data"){
+            std::cout<<"How many lines would you like to print?";
+            int n_lines;
+            std::cin >> n_lines; 
+            print_data(data,n_lines);
+        }
+        else if (command == "print_mag"){
+            print_mag(data_mag);
+        }
+        else if (command == "quit"){
+            break;
+        }
+        else {
+            std::cout<<"command not valid"<<std::endl;
+        }
+    }
+
+
+    // // print the data
+    // print_data(data,100);
+    // // print the magniture
+    // print_mag(data_mag);
 
     return 0;
 }
