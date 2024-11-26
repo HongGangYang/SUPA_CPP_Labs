@@ -1,9 +1,10 @@
-#include "AnalyseData.h"
+#include "CustomFunctions.h"
 #include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <string>
+#include <cmath>
 
 
 std::ifstream read_file(std::string input_file){
@@ -43,8 +44,36 @@ std::vector<std::pair<double, double>> read_data_from_file(std::ifstream& data_f
     return data;
 }
 
-void print_data(std::vector<std::pair<double, double>> data){
+std::vector<double> mag(std::vector<std::pair<double, double>> data){
+    std::vector<double> mag_;
     for (const auto& point : data) {
+        double mag_temp;
+        mag_temp = pow(point.first*point.first+point.second*point.second,0.5);
+        mag_.push_back(mag_temp);
+    }
+    return mag_;
+}
+
+void print_data(std::vector<std::pair<double, double>> data, int n){
+    if (n > data.size()){
+        std::cout<<"Warning: n is bigger than the size of the data. The first 5 data is printed instead."<<std::endl;
+        std::vector<std::pair<double, double>> first_n(data.begin(), data.begin() + 5);
+        for (const auto& point : first_n) {
+         std::cout <<  point.first << "," << point.second << std::endl;
+    } 
+    }
+    else {
+        std::vector<std::pair<double, double>> first_n(data.begin(), data.begin() + n);
+        for (const auto& point : first_n) {
         std::cout <<  point.first << "," << point.second << std::endl;
     }
+    }
+    
+}
+
+void print_mag(std::vector<double> mag){
+    for (auto& mag_ : mag) {
+    std::cout <<  mag_ << std::endl;
+    }
+    
 }
