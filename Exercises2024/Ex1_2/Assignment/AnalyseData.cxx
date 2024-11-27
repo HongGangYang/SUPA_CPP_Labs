@@ -14,10 +14,19 @@ int main() {
     std::vector<std::pair<double, double>> data;
     // read the data from the file
     data = read_data_from_file(data_file);
+    std::cout<<"Reading data finished."<<std::endl;
     // declare the magnitude vector
     std::vector<double> data_mag;
     //calculate the magnitude
     data_mag = mag(data);
+    std::cout<<"Magnitude calculation finished."<<std::endl;
+
+    std::pair<double, double> least_square_fit_result;
+    least_square_fit_result = linearFit(data);
+    std::ofstream outFile("least_square_fit_result.txt");
+    outFile << "y=" << least_square_fit_result.first << "x+" << least_square_fit_result.second;
+    outFile.close();
+    std::cout<<"Fit result is:" << "y=" << least_square_fit_result.first << "x+" << least_square_fit_result.second<<". Saved to least_square_fit_result.txt" <<std::endl;
 
     while (true){
         std::cout<<"Please specify the function you want to run, choose among \"print_data\",\"print_mag\", and \"quit\"."<<std::endl;

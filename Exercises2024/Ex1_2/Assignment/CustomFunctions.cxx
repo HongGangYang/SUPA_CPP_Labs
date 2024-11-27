@@ -77,3 +77,27 @@ void print_mag(std::vector<double> mag){
     }
     
 }
+
+std::pair<double, double> linearFit(const std::vector<std::pair<double, double>>& data) {
+    double sum_x = 0.0, sum_y = 0.0, sum_xx = 0.0, sum_xy = 0.0;
+    int N = data.size();
+    
+    // Compute the sums
+    for (const auto& point : data) {
+        double x = point.first;
+        double y = point.second;
+
+        sum_x += x;
+        sum_y += y;
+        sum_xx += x * x;
+        sum_xy += x * y;
+    }
+
+    // Calculate slope (p) and intercept (q)
+    double denominator = N * sum_xx - sum_x * sum_x;
+
+    double p = (N * sum_xy - sum_x * sum_y) / denominator;
+    double q = (sum_xx*sum_y-sum_xy*sum_x) / denominator;
+
+    return {p, q}; 
+}

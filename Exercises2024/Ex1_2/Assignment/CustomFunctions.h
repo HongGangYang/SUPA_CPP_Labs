@@ -16,3 +16,5 @@ std::vector<double> mag(std::vector<std::pair<double, double>>);
 void print_data(std::vector<std::pair<double, double>>,int);
 
 void print_mag(std::vector<double>);
+
+std::pair<double, double> linearFit(const std::vector<std::pair<double, double>>&);
