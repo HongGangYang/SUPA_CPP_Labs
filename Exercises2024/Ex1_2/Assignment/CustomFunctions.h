@@ -13,8 +13,14 @@ std::vector<std::pair<double, double>> read_data_from_file(std::ifstream&);
 
 std::vector<double> mag(std::vector<std::pair<double, double>>);
 
-void print_data(std::vector<std::pair<double, double>>,int);
+void myprint(std::vector<std::pair<double, double>>,int);
 
-void print_mag(std::vector<double>);
+void myprint(std::vector<double>);
 
 std::pair<double, double> linearFit(const std::vector<std::pair<double, double>>&);
+
+double chi_squre_of_the_fit(std::pair<double, double>, std::vector<std::pair<double, double>>, std::string file_path_for_sigma = "./../error2D_float.txt");
+
+double x_to_the_y_single_point(double, int);
+
+std::vector<double> x_to_the_y(std::vector<std::pair<double, double>>);

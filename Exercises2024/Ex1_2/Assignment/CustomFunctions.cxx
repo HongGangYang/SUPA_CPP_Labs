@@ -54,7 +54,7 @@ std::vector<double> mag(std::vector<std::pair<double, double>> data){
     return mag_;
 }
 
-void print_data(std::vector<std::pair<double, double>> data, int n){
+void myprint(std::vector<std::pair<double, double>> data, int n){
     if (n > data.size()){
         std::cout<<"Warning: n is bigger than the size of the data. The first 5 data is printed instead."<<std::endl;
         std::vector<std::pair<double, double>> first_n(data.begin(), data.begin() + 5);
@@ -71,7 +71,7 @@ void print_data(std::vector<std::pair<double, double>> data, int n){
     
 }
 
-void print_mag(std::vector<double> mag){
+void myprint(std::vector<double> mag){
     for (auto& mag_ : mag) {
     std::cout <<  mag_ << std::endl;
     }
@@ -100,4 +100,34 @@ std::pair<double, double> linearFit(const std::vector<std::pair<double, double>>
     double q = (sum_xx*sum_y-sum_xy*sum_x) / denominator;
 
     return {p, q}; 
+}
+
+double chi_squre_of_the_fit(std::pair<double, double> fit_result, std::vector<std::pair<double, double>> data, std::string file_path_for_sigma){
+    std::ifstream sigma_file = read_file(file_path_for_sigma);
+    std::vector<std::pair<double, double>> sigma;
+    sigma = read_data_from_file(sigma_file);
+
+    int n_points = data.size();
+    double chi_square = 0.;
+    for (int i = 0; i<n_points ; i++) {
+        chi_square += pow((data[i].second-fit_result.first*data[i].first-fit_result.second),2)/pow(sigma[i].second,2);
+        }
+    chi_square /= (n_points-2);
+    return chi_square;
+}
+
+double x_to_the_y_single_point(double x, int y){
+    if (y==0){
+        return 1.0;
+    }
+    return x*x_to_the_y_single_point(x,y-1);
+}
+
+std::vector<double> x_to_the_y(std::vector<std::pair<double, double>> data){
+    int n_points = data.size();
+    std::vector<double> result;
+    for (int i = 0; i<n_points ; i++) {
+        result.push_back(x_to_the_y_single_point(data[i].first,std::round(data[i].second)));
+    }
+    return result;
 }
