@@ -22,5 +22,9 @@ std::pair<double, double> linearFit(const std::vector<std::pair<double, double>>
 double chi_squre_of_the_fit(std::pair<double, double>, std::vector<std::pair<double, double>>, std::string file_path_for_sigma = "./../error2D_float.txt");
 
 double x_to_the_y_single_point(double, int);
-
+ 
 std::vector<double> x_to_the_y(std::vector<std::pair<double, double>>);
+
+void my_save(const std::vector<double>&, const std::string&);
+
+void my_save(std::pair<double, double>&, double , const std::string& );

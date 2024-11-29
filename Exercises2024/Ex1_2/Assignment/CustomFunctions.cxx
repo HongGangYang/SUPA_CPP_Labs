@@ -5,7 +5,7 @@
 #include <vector>
 #include <string>
 #include <cmath>
-
+ 
 
 std::ifstream read_file(std::string input_file){
     std::ifstream data_file(input_file);
@@ -130,4 +130,21 @@ std::vector<double> x_to_the_y(std::vector<std::pair<double, double>> data){
         result.push_back(x_to_the_y_single_point(data[i].first,std::round(data[i].second)));
     }
     return result;
+}
+
+
+
+void my_save(const std::vector<double>& data, const std::string& filename) {
+    std::ofstream output_file(filename); 
+    for (const double& value : data) {
+        output_file << value << "\n"; // Write each element on a new line
+    }
+
+    output_file.close(); // Close the file
+}
+
+void my_save(std::pair<double, double>& fit_result_, double chi_square_, const std::string& filename){
+    std::ofstream output_file(filename); 
+    output_file<<"Fit result is:" << "y=" << fit_result_.first << "x+" << fit_result_.second<<". Chi square of the fit is " << chi_square_<<std::endl;
+    output_file.close(); // Close the file
 }

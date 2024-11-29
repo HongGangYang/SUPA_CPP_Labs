@@ -1,0 +1,1 @@
+Fit result is:y=0.126266x+2.02628. Chi square of the fit is 34401.9
