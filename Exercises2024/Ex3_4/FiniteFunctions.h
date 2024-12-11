@@ -1,10 +1,14 @@
 #include <string>
 #include <vector>
+#include <iostream>
+#include <fstream>
+#include <cmath>
+#include <stdexcept>
 #include "gnuplot-iostream.h"
 
 #pragma once //Replacement for IFNDEF
 
-class FiniteFunction{
+class FiniteFunction{   
 
 public:
   FiniteFunction(); //Empty constructor
@@ -46,4 +50,55 @@ protected:
   
 private:
   double invxsquared(double x); //The default functional form
+};
+
+std::vector<double> readDataFromFile(const std::string& filePath="./Outputs/data/MysteryData15041.txt");
+
+class Gaussian : public FiniteFunction {
+public:
+  Gaussian();
+  Gaussian(double range_min, double range_max,double mu_ ,double sigma_,std::string outfile);
+  virtual double callFunction(double x); //Call the function with value x (Overridable)
+
+protected:
+  double m_mu;
+  double m_sigma;
+
+private:
+  double gaussian_function(double x, double mu, double sigma);
+};
+
+class Cauchy_Lorentz : public FiniteFunction {
+public:
+  Cauchy_Lorentz();
+  Cauchy_Lorentz(double range_min, double range_max,double x_0 ,double gamma_,std::string outfile);
+  virtual double callFunction(double x); //Call the function with value x (Overridable)
+
+protected:
+  double m_x_0;
+  double m_gamma;
+
+private:
+  double Cauchy_Lorentz_function(double x, double x_0, double gamma);
+};
+
+class Negative_Crystal_Ball : public FiniteFunction {
+public:
+  Negative_Crystal_Ball();
+  Negative_Crystal_Ball(double range_min, double range_max, double x_bar_, double n_, double sigma_, double alpha_, std::string outfile);
+  virtual double callFunction(double x); //Call the function with value x (Overridable)
+
+protected:
+  double m_x_bar;
+  double m_n;
+  double m_sigma;
+  double m_alpha;
+  double m_A;
+  double m_B;
+  double m_C;
+  double m_D;
+  double m_N;
+
+private:
+  double Negative_Crystal_Ball_function(double x, double x_bar_, double n_, double sigma_, double alpha_, double A_, double B_, double N_);
 };
