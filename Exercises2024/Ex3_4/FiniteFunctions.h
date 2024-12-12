@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <cmath>
+#include <random>
 #include <stdexcept>
 #include "gnuplot-iostream.h"
 
@@ -22,7 +23,7 @@ public:
   void setRangeMax(double RMax);
   void setOutfile(std::string outfile);
   void plotFunction(); //Plot the function using scanFunction
-  
+  std::vector<double> GenerateRandom(int N_random=100000);
   //Plot the supplied data points (either provided data or points sampled from function) as a histogram using NBins
   void plotData(std::vector<double> &points, int NBins, bool isdata=true); //NB! use isdata flag to pick between data and sampled distributions
   virtual void printInfo(); //Dump parameter info about the current function (Overridable)
@@ -66,7 +67,7 @@ protected:
 
 private:
   double gaussian_function(double x, double mu, double sigma);
-};
+}; 
 
 class Cauchy_Lorentz : public FiniteFunction {
 public:

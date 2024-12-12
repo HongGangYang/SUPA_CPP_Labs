@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <random>
 #include "FiniteFunctions.h"
 #include <filesystem> //To check extensions in a nice way
 
@@ -206,6 +207,36 @@ void FiniteFunction::printInfo(){
 void FiniteFunction::plotFunction(){
   m_function_scan = this->scanFunction(10000);
   m_plotfunction = true;
+}
+
+std::vector<double> FiniteFunction::GenerateRandom(int N_random){
+  std::random_device rd;
+  std::mt19937 gen(rd());
+  std::uniform_real_distribution<> uniform_dist_x(m_RMin, m_RMax);
+  std::uniform_real_distribution<> uniform_dist_T(0, 1);
+  double x_i = uniform_dist_x(gen);
+  std::vector<double> random_data;
+  for (int i = 0; i < N_random; ) {
+      std::normal_distribution<> normal_dist(x_i, 0.2);
+      double y = normal_dist(gen);
+      double A;
+      if ((this->callFunction(y)/this->callFunction(x_i))<1){
+        A = this->callFunction(y)/this->callFunction(x_i);
+      }
+      else{
+        A=1.;
+      }
+      double T = uniform_dist_T(gen);
+      if (T<A){
+        random_data.push_back(y);
+        x_i = y;
+        i++;
+      }
+      else{
+        continue;
+      }
+    }
+  return random_data;
 }
 
 //Transform data points into a format gnuplot can use (histogram) and set flag to enable drawing of data to output plot
